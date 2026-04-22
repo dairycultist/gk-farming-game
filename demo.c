@@ -9,6 +9,10 @@ static int py = 0;
 
 static SpriteGrid world;
 
+#define ITOX(sprite_grid, i) ((i) % (sprite_grid.w))
+#define ITOY(sprite_grid, i) ((i) / (sprite_grid.w))
+#define XYTOI(sprite_grid, x, y) ((x) + (y) * (sprite_grid.w))
+
 void GK_init() {
 
 	set_clear_color(10, 40, 130);
@@ -19,7 +23,7 @@ void GK_init() {
 
 	for (int i = 0; i < world.w * world.h; i++) {
 
-		if (i / world.w < 4 || i / world.w > 12 || i % world.w < 4 || i % world.w > 12)
+		if (ITOY(world, i) < 4 || ITOY(world, i) > 12 || ITOX(world, i) < 4 || ITOX(world, i)> 12)
 			world.sprites[i] = 12;
 		else
 			world.sprites[i] = 30;
@@ -31,10 +35,10 @@ void GK_init() {
 			continue;
 
 		world.sprites[i] = 30
-							+ (world.sprites[i + 1] == 12 ? 1 : 0)			// right
-							+ (world.sprites[i - 1] == 12 ? -1 : 0)			// left
-							+ (world.sprites[i + world.w] == 12 ? 16 : 0)	// down
-							+ (world.sprites[i - world.w] == 12 ? -16 : 0);	// up
+			+ (world.sprites[i + XYTOI(world,  1,  0)] == 12 ? 1 : 0)	// right
+			+ (world.sprites[i + XYTOI(world, -1,  0)] == 12 ? -1 : 0)	// left
+			+ (world.sprites[i + XYTOI(world,  0,  1)] == 12 ? 16 : 0)	// down
+			+ (world.sprites[i + XYTOI(world,  0, -1)] == 12 ? -16 : 0);// up
 	}
 }
 
