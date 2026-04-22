@@ -9,10 +9,6 @@ static int py = 0;
 
 static SpriteGrid world;
 
-#define ITOX(sprite_grid, i) ((i) % (sprite_grid.w))
-#define ITOY(sprite_grid, i) ((i) / (sprite_grid.w))
-#define XYTOI(sprite_grid, x, y) ((x) + (y) * (sprite_grid.w))
-
 void GK_init() {
 
 	set_clear_color(10, 40, 130);
