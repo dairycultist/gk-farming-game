@@ -29,15 +29,16 @@ void GK_init() {
 			world.sprites[i] = 30;
 	}
 
+	// prettify dirt-grass boundary
 	for (int i = 0; i < world.w * world.h; i++) {
 
 		if (world.sprites[i] != 30)
 			continue;
 
 		world.sprites[i] = 30
-			+ (world.sprites[i + XYTOI(world,  1,  0)] == 12 ? 1 : 0)	// right
-			+ (world.sprites[i + XYTOI(world, -1,  0)] == 12 ? -1 : 0)	// left
-			+ (world.sprites[i + XYTOI(world,  0,  1)] == 12 ? 16 : 0)	// down
+			+ (world.sprites[i + XYTOI(world,  1,  0)] == 12 ?   1 : 0)	// right
+			+ (world.sprites[i + XYTOI(world, -1,  0)] == 12 ?  -1 : 0)	// left
+			+ (world.sprites[i + XYTOI(world,  0,  1)] == 12 ?  16 : 0)	// down
 			+ (world.sprites[i + XYTOI(world,  0, -1)] == 12 ? -16 : 0);// up
 	}
 }
@@ -56,5 +57,6 @@ void GK_frame(const Input *input) {
 	if (input->right)
 		px++;
 
-	draw_sprite_grid(&world, -px, -py);
+	draw_sprite_grid(&world, (WIDTH - SPR_DIM) / 2 - px, (HEIGHT - SPR_DIM) / 2 - py);
+	draw_sprite(0, (WIDTH - SPR_DIM) / 2, (HEIGHT - SPR_DIM) / 2, 0);
 }
